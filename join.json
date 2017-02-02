@@ -30,7 +30,7 @@
 					"uom": "celsius",
 					"math": "mean"
 				},
-				"color": '#4A90E2',
+				"color": "#4A90E2",
 				"icon": "flaticon-thermometer21"
 			}
 		}
