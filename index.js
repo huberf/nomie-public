@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
   res.send('{"status": "online"}');
 });
 
-app.get('/users/:publidId', (req, res) => {
+app.get('/users/:publicId', (req, res) => {
   User.find({ publicId: req.params.publicId }, (err, user) => {
     if (user[0]) {
       res.send(user[0].count);
