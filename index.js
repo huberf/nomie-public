@@ -28,8 +28,13 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
 
-app.get('/', function(req, res) {
+app.get('/', (req, res) => {
   res.send('{"status": "online"}');
+});
+
+app.get('/join', (req, res) => {
+  var config = require('./join.json');
+  res.send(config);
 });
 
 io.sockets.on('connection', function(socket) {

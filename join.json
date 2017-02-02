@@ -1,0 +1,38 @@
+{
+	"id": "noah.nomie.public",
+	"name": "Public Nomie",
+	"img": "http://snap.icorbin.com/weather-tracking.svg",
+	"summary": "Anonymously share tracker data",
+	"uses": ["last-location", "api", "geo", "commands"],
+	"color": "#4A90E2",
+	"hostedBy": "Noah Huber-Feely",
+	"join": "https://nomiepublic.herokuapp.com/join",
+	"more": "https://nomie.io",
+	"collection": {
+		"method": "automatic",
+		"frequency": "30m",
+		"url": "https://nomiepublic.herokuapp.com/collect",
+		"amount": "1d"
+	},
+	"leave": "https://nomiepublic.herokuapp.com/leave",
+	"info": {
+	},
+	"slots": {
+		"item": {
+			"label": "Public",
+			"summary": null,
+			"tracker": null,
+			"required": true,
+			"recommended": {
+				"label": "Test",
+				"config": {
+					"type": "numeric",
+					"uom": "celsius",
+					"math": "mean"
+				},
+				"color": '#4A90E2',
+				"icon": "flaticon-thermometer21"
+			}
+		}
+	}
+}
