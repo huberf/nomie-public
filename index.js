@@ -37,7 +37,7 @@ app.get('/join', (req, res) => {
   res.send(config);
 });
 
-app.get('/collect', (req, res) => {
+app.post('/collect', (req, res) => {
   // TODO: Make work
   console.log(req.body);
   res.send('{"status": "fail"}')
