@@ -63,7 +63,7 @@ app.post('/collect', (req, res) => {
   console.log(req.body);
   var userId = req.body.anonid;
   var dayCount = 2; // TODO: Make actual value
-  User.find({ userId }, (err, users) {
+  User.find({ userId }, (err, users) => {
     if (users[0] && users.length == 1) {
       users[0].count = dayCount;
       users[0].save();
