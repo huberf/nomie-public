@@ -1,7 +1,7 @@
 {
 	"id": "noah.nomie.public",
 	"name": "Public Nomie",
-	"img": "http://snap.icorbin.com/weather-tracking.svg",
+	"img": "https://nomiepublic.herokuapp.com/nomie-public.jpg",
 	"summary": "Anonymously share tracker data",
 	"uses": ["last-location", "api", "geo", "commands"],
 	"color": "#4A90E2",
