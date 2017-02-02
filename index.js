@@ -1,5 +1,6 @@
 //Getting all dependencies
 var express = require('express');
+var passGen = require('password-generator');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 var app = express();
@@ -27,9 +28,29 @@ app.use(session({secret: 's3cr3tsSh0uldB3K3pt'}));
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 
+// Setup DB
+var mongoose = require('mongoose');
+var userSchema = new mongoose.Schema({
+	userId: String,
+  publicId: String,
+  count: Number,
+});
+const User = mongoose.model('User', userSchema);
+const db = mongoose.connect(process.env.MONGO_DB_URL);
+
 
 app.get('/', (req, res) => {
   res.send('{"status": "online"}');
+});
+
+app.get('/users/:publidId', (req, res) => {
+  User.find({ publicId: req.params.publicId }, (err, user) => {
+    if (user[0]) {
+      res.send(user[0].count);
+    } else {
+      res.send('No user found');
+    }
+  });
 });
 
 app.get('/join', (req, res) => {
@@ -40,7 +61,18 @@ app.get('/join', (req, res) => {
 app.post('/collect', (req, res) => {
   // TODO: Make work
   console.log(req.body);
-  res.send('{"status": "fail"}')
+  var userId = req.body.anonid;
+  var dayCount = 2; // TODO: Make actual value
+  User.find({ userId }, (err, users) {
+    if (users[0] && users.length == 1) {
+      users[0].count = dayCount;
+      users[0].save();
+    } else if (!users[0]) {
+      var newUser = User({userId, publicId: passGen(12, false), count: dayCount});
+      newUser.save();
+    }
+  });
+  res.send('{"status": "success"}')
 });
 
 app.get('/leave', (req, res) => {
