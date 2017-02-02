@@ -37,6 +37,16 @@ app.get('/join', (req, res) => {
   res.send(config);
 });
 
+app.get('/collect', (req, res) => {
+  // TODO: Make work
+  console.log(req.body);
+  res.send('{"status": "fail"}')
+});
+
+app.get('/leave', (req, res) => {
+  // TODO: Delete saved user data
+});
+
 io.sockets.on('connection', function(socket) {
   /*
   socket.on('test', function(data) {

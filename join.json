@@ -10,7 +10,7 @@
 	"more": "https://nomie.io",
 	"collection": {
 		"method": "automatic",
-		"frequency": "30m",
+		"frequency": "30mm",
 		"url": "https://nomiepublic.herokuapp.com/collect",
 		"amount": "1d"
 	},
