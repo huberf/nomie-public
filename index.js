@@ -46,7 +46,16 @@ app.get('/', (req, res) => {
 app.get('/users/:publicId', (req, res) => {
   User.find({ publicId: req.params.publicId }, (err, user) => {
     if (user[0]) {
-      res.send(user[0].count);
+      var message = `<style>
+        #main {
+          color: grey;
+          font-size: 120px;
+        }
+      </style>
+      <div id="main">
+        Count: ${user[0].count}
+      </div>`
+      res.send(message);
     } else {
       res.send('No user found');
     }
