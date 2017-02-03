@@ -91,7 +91,7 @@ app.post('/collect', (req, res) => {
       res.send(
           {html:
           `<div>
-          Your Public ID: ${publicId}
+          Your Public ID: <a href="https://nomiepublic.herokuapp.com/users/${publicId}">${publicId}</a>
           </div>`
           });
     } else if (!users[0]) {
