@@ -54,6 +54,7 @@ app.get('/users/:publicId', (req, res) => {
         }
       </style>
       <div id="main">
+        Title: ${user[0].name}<br />
         Count: ${user[0].count}
       </div>`
       res.send(message);
