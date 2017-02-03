@@ -79,10 +79,15 @@ app.post('/collect', (req, res) => {
   User.find({ userId }, (err, users) => {
     if (users[0] && users.length == 1) {
       users[0].count = dayCount;
-      users[0].name = req.body.experiment.info.title.text;
+      users[0].name = req.body.experiment.info.title.value;
       users[0].save();
     } else if (!users[0]) {
-      var newUser = User({userId, publicId: passGen(12, false), name: req.body.info.title.text, count: dayCount});
+      var newUser = User({
+        userId,
+        publicId: passGen(12, false),
+        name: req.body.experiment.info.title.value,
+        count: dayCount
+      });
       newUser.save();
     }
   });
