@@ -33,6 +33,7 @@ var mongoose = require('mongoose');
 var userSchema = new mongoose.Schema({
 	userId: String,
   publicId: String,
+  name: String,
   count: Number,
 });
 const User = mongoose.model('User', userSchema);
@@ -72,13 +73,14 @@ app.post('/collect', (req, res) => {
   console.log(req.body);
   console.log(req.body.experiment.slots.data);
   var userId = req.body.anonid;
-  var dayCount = 2; // TODO: Make actual value
+  var dayCount = req.body.experiment.slots.data.data.length; // TODO: Make actual value
   User.find({ userId }, (err, users) => {
     if (users[0] && users.length == 1) {
       users[0].count = dayCount;
+      users[0].name = req.body.experiments.info.title.text;
       users[0].save();
     } else if (!users[0]) {
-      var newUser = User({userId, publicId: passGen(12, false), count: dayCount});
+      var newUser = User({userId, publicId: passGen(12, false), name: req.body.info.title.text, count: dayCount});
       newUser.save();
     }
   });
