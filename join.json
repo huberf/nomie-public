@@ -16,8 +16,6 @@
 	},
 	"leave": "https://nomiepublic.herokuapp.com/leave",
 	"info": {
-	},
-  "fields": {
     "title": {
       "type": "text",
       "label": "Public Name",
@@ -26,7 +24,7 @@
       "description": "The name displayed on the trackers public page.",
       "required": true
     }
-  },
+	},
 	"slots": {
 		"data": {
 			"label": "Public",
