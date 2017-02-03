@@ -73,12 +73,13 @@ app.post('/collect', (req, res) => {
   // TODO: Make work
   console.log(req.body);
   console.log(req.body.experiment.slots.data);
+  console.log(req.body.experiment.info.title);
   var userId = req.body.anonid;
   var dayCount = req.body.experiment.slots.data.data.length; // TODO: Make actual value
   User.find({ userId }, (err, users) => {
     if (users[0] && users.length == 1) {
       users[0].count = dayCount;
-      users[0].name = req.body.experiments.info.title.text;
+      users[0].name = req.body.experiment.info.title.text;
       users[0].save();
     } else if (!users[0]) {
       var newUser = User({userId, publicId: passGen(12, false), name: req.body.info.title.text, count: dayCount});
