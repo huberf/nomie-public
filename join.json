@@ -17,8 +17,18 @@
 	"leave": "https://nomiepublic.herokuapp.com/leave",
 	"info": {
 	},
+  "fields": {
+    "title": {
+      "type": "text",
+      "label": "Public Name",
+      "value": "",
+      "placeholder": "My Tracker",
+      "description": "The name displayed on the trackers public page.",
+      "required": true
+    }
+  },
 	"slots": {
-		"item": {
+		"data": {
 			"label": "Public",
 			"summary": null,
 			"tracker": null,
