@@ -89,10 +89,11 @@ app.post('/collect', (req, res) => {
       users[0].save();
       var publicId = users[0].publicId;
       res.send(
+          {html:
           `<div>
           Your Public ID: ${publicId}
           </div>`
-          );
+          });
     } else if (!users[0]) {
       var publicId = passGen(12, false);
       var newUser = User({
@@ -103,10 +104,11 @@ app.post('/collect', (req, res) => {
       });
       newUser.save();
       res.send(
+          {html:
           `<div>
           Your Public ID: ${publicId}
           </div>`
-          );
+          });
     }
   });
 });
