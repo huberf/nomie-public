@@ -51,11 +51,17 @@ app.get('/users/:publicId', (req, res) => {
         #main {
           color: grey;
           font-size: 120px;
+          text-align: center;
+        }
+        #count {
+          font-size: 100px;
         }
       </style>
       <div id="main">
-        Title: ${user[0].name}<br />
-        Count: ${user[0].count}
+        ${user[0].name}<br />
+        <div id="count">
+          Today's Count: ${user[0].count}
+        </div>
       </div>`
       res.send(message);
     } else {
