@@ -81,17 +81,28 @@ app.post('/collect', (req, res) => {
       users[0].count = dayCount;
       users[0].name = req.body.experiment.info.title.value;
       users[0].save();
+      var publicId = users[0].publicId;
+      res.send(
+          `<div>
+          Your Public ID: ${publicId}
+          </div>`
+          );
     } else if (!users[0]) {
+      var publicId = passGen(12, false);
       var newUser = User({
+        publicId,
         userId,
-        publicId: passGen(12, false),
         name: req.body.experiment.info.title.value,
         count: dayCount
       });
       newUser.save();
+      res.send(
+          `<div>
+          Your Public ID: ${publicId}
+          </div>`
+          );
     }
   });
-  res.send('{"status": "success"}')
 });
 
 app.get('/leave', (req, res) => {
