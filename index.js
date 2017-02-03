@@ -70,7 +70,7 @@ app.get('/join', (req, res) => {
 app.post('/collect', (req, res) => {
   // TODO: Make work
   console.log(req.body);
-  console.log(req.body.experiments.slots.item);
+  console.log(req.body.experiment.slots.item);
   var userId = req.body.anonid;
   var dayCount = 2; // TODO: Make actual value
   User.find({ userId }, (err, users) => {
