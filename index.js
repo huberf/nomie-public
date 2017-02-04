@@ -75,13 +75,19 @@ app.get('/join', (req, res) => {
   res.send(config);
 });
 
+// Determines count to display
+var parseEvents = (data) => {
+  // TODO: Implement REGEX date parser, item type diferentiation, etc.
+  return data.length;
+}
+
 app.post('/collect', (req, res) => {
   // TODO: Make work
   console.log(req.body);
   console.log(req.body.experiment.slots.data);
   console.log(req.body.experiment.info.title);
   var userId = req.body.anonid;
-  var dayCount = req.body.experiment.slots.data.data.length; // TODO: Make actual value
+  var dayCount = parseEvents(req.body.experiment.slots.data.data);
   User.find({ userId }, (err, users) => {
     if (users[0] && users.length == 1) {
       users[0].count = dayCount;
@@ -90,8 +96,12 @@ app.post('/collect', (req, res) => {
       var publicId = users[0].publicId;
       res.send(
           {html:
-          `<div>
-          Your Public ID: <a href="https://nomiepublic.herokuapp.com/users/${publicId}">${publicId}</a>
+          `<div class="">
+            <div class="nui-list">
+              <div class="text-center">
+                Your Public ID: <a href="https://nomiepublic.herokuapp.com/users/${publicId}">${publicId}</a>
+              </div>
+            </div>
           </div>`
           });
     } else if (!users[0]) {
@@ -105,8 +115,12 @@ app.post('/collect', (req, res) => {
       newUser.save();
       res.send(
           {html:
-          `<div>
-          Your Public ID: ${publicId}
+          `<div class="">
+            <div class="nui-list">
+              <div class="text-center">
+                Your Public ID: <a href="https://nomiepublic.herokuapp.com/users/${publicId}">${publicId}</a>
+              </div>
+            </div>
           </div>`
           });
     }
