@@ -78,6 +78,11 @@ app.get('/join', (req, res) => {
 // Determines count to display
 var parseEvents = (data) => {
   // TODO: Implement REGEX date parser, item type diferentiation, etc.
+  var now = Date()
+  for(var i = 0; i < data.length; i++) {
+    // TODO: Implement time processing and crunching to local time
+    data[i].time;
+  }
   return data.length;
 }
 
