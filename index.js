@@ -1,5 +1,6 @@
 //Getting all dependencies
 var express = require('express');
+var tz = require('tz-lookup');
 var passGen = require('password-generator');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -93,6 +94,8 @@ app.post('/collect', (req, res) => {
   console.log(req.body.experiment.info.title);
   var userId = req.body.anonid;
   var dayCount = parseEvents(req.body.experiment.slots.data.data);
+  var timeZone = tz(req.body.experiment.location[0], req.body.experiment.location[1]);
+  console.log(timeZone);
   User.find({ userId }, (err, users) => {
     if (users[0] && users.length == 1) {
       users[0].count = dayCount;
