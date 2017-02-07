@@ -12,6 +12,7 @@
     "ejs": "^2.3.1",
     "express": "^4.14.0",
     "express-session": "^1.11.3",
+    "moment-timezone": "^0.5.11",
     "mongoose": "^4.8.1",
     "nodemailer": "^2.3.1",
     "password-generator": "^2.1.0",

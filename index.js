@@ -1,6 +1,7 @@
 //Getting all dependencies
 var express = require('express');
 var tz = require('tz-lookup');
+var moment = require('moment-timezone');
 var passGen = require('password-generator');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -78,13 +79,19 @@ app.get('/join', (req, res) => {
 
 // Determines count to display
 var parseEvents = (data) => {
-  // TODO: Implement REGEX date parser, item type diferentiation, etc.
-  var now = Date()
+  var total = 0;
   for(var i = 0; i < data.length; i++) {
-    // TODO: Implement time processing and crunching to local time
-    data[i].time;
+    var rawTime = data[i].time
+    var time = rawTime.substring(0, 19) + "Z";
+    var format = "YYYY-MM-DDThh:mm:ssz"
+    var tzCalc = tz(data[i].geo[0], data[i].geo[1])
+    var actualTime = moment(time, format).tz(tzCalc).format('MM DD');
+    var currentDate = moment().format('MM DD');
+    if (actualTime == currentDate) {
+      total += 1;
+    }
   }
-  return data.length;
+  return total;
 }
 
 app.post('/collect', (req, res) => {
@@ -94,8 +101,6 @@ app.post('/collect', (req, res) => {
   console.log(req.body.experiment.info.title);
   var userId = req.body.anonid;
   var dayCount = parseEvents(req.body.experiment.slots.data.data);
-  var timeZone = tz(req.body.experiment.location[0], req.body.experiment.location[1]);
-  console.log(timeZone);
   User.find({ userId }, (err, users) => {
     if (users[0] && users.length == 1) {
       users[0].count = dayCount;
@@ -151,3 +156,4 @@ io.sockets.on('connection', function(socket) {
 http.listen(app.get('port'), function() {
   console.log('Node app is running on port ', app.get('port'));
 });
+console.log(parseEvents([]));
