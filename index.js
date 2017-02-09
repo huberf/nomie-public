@@ -92,9 +92,11 @@ var parseEvents = (data) => {
     var currentDate = moment().format('MM DD');
     var yesterdayDate = moment().subtract(1, 'days').format('MM DD');
     if (actualTime == currentDate) {
+      console.log('Found hit for today.');
       total += 1;
     }
     if (actualTime == yesterdayDate) {
+      console.log('Found hit for yesterday.');
       yesterdayTotal += 1;
     }
   }
