@@ -12,7 +12,7 @@
 		"method": "automatic",
 		"frequency": "30mm",
 		"url": "https://nomiepublic.herokuapp.com/collect",
-		"amount": "1d"
+		"amount": "1m"
 	},
 	"leave": "https://nomiepublic.herokuapp.com/leave",
 	"info": {

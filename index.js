@@ -36,7 +36,8 @@ var userSchema = new mongoose.Schema({
 	userId: String,
   publicId: String,
   name: String,
-  count: Number,
+  todayCount: Number,
+  yesterdayCount: Number,
 });
 const User = mongoose.model('User', userSchema);
 const db = mongoose.connect(process.env.MONGO_DB_URL);
@@ -62,7 +63,8 @@ app.get('/users/:publicId', (req, res) => {
       <div id="main">
         ${user[0].name}<br />
         <div id="count">
-          Today's Count: ${user[0].count}
+          Today's Count: ${user[0].todayCount}
+          Yesterday's Count: ${user[0].yesterdayCount}
         </div>
       </div>`
       res.send(message);
@@ -80,6 +82,7 @@ app.get('/join', (req, res) => {
 // Determines count to display
 var parseEvents = (data) => {
   var total = 0;
+  var yesterdayTotal = 0;
   for(var i = 0; i < data.length; i++) {
     var rawTime = data[i].time
     var time = rawTime.substring(0, 19) + "Z";
@@ -87,11 +90,15 @@ var parseEvents = (data) => {
     var tzCalc = tz(data[i].geo[0], data[i].geo[1])
     var actualTime = moment(time, format).tz(tzCalc).format('MM DD');
     var currentDate = moment().format('MM DD');
+    var yesterdayDate = moment().subtract(1, 'days').format('MM DD');
     if (actualTime == currentDate) {
       total += 1;
     }
+    if (actualTime == yesterdayDate) {
+      yesterdayTotal += 1;
+    }
   }
-  return total;
+  return {today: total, yesterday: yesterdayTotal};
 }
 
 app.post('/collect', (req, res) => {
@@ -100,10 +107,13 @@ app.post('/collect', (req, res) => {
   console.log(req.body.experiment.slots.data);
   console.log(req.body.experiment.info.title);
   var userId = req.body.anonid;
-  var dayCount = parseEvents(req.body.experiment.slots.data.data);
+  var count = parseEvents(req.body.experiment.slots.data.data);
+  var dayCount = count.today;
+  var yesterdayCount = count.yesterday;
   User.find({ userId }, (err, users) => {
     if (users[0] && users.length == 1) {
-      users[0].count = dayCount;
+      users[0].todayCount = dayCount;
+      users[0].yesterdayCount = dayCount;
       users[0].name = req.body.experiment.info.title.value;
       users[0].save();
       var publicId = users[0].publicId;
@@ -123,7 +133,8 @@ app.post('/collect', (req, res) => {
         publicId,
         userId,
         name: req.body.experiment.info.title.value,
-        count: dayCount
+        todayCount: dayCount,
+        yesterdayCount: yesterdayCount,
       });
       newUser.save();
       res.send(
