@@ -80,15 +80,14 @@ app.get('/join', (req, res) => {
 });
 
 // Determines count to display
-var parseEvents = (data) => {
+var parseEvents = (data, timezone) => {
   var total = 0;
   var yesterdayTotal = 0;
   for(var i = 0; i < data.length; i++) {
     var rawTime = data[i].time
     var time = rawTime.substring(0, 19) + "Z";
     var format = "YYYY-MM-DDThh:mm:ssz"
-    var tzCalc = tz(data[i].geo[0], data[i].geo[1])
-    var actualTime = moment(time, format).tz(tzCalc).format('MM DD');
+    var actualTime = moment(time, format).tz(timezone).format('MM DD');
     var currentDate = moment().format('MM DD');
     var yesterdayDate = moment().subtract(1, 'days').format('MM DD');
     if (actualTime == currentDate) {
@@ -108,8 +107,9 @@ app.post('/collect', (req, res) => {
   console.log(req.body);
   console.log(req.body.experiment.slots.data);
   console.log(req.body.experiment.info.title);
+  var tzCalc = tz(req.body.experiment.geo[0], req.body.experiment.geo[1])
   var userId = req.body.anonid;
-  var count = parseEvents(req.body.experiment.slots.data.data);
+  var count = parseEvents(req.body.experiment.slots.data.data, tzCalc);
   var dayCount = count.today;
   var yesterdayCount = count.yesterday;
   User.find({ userId }, (err, users) => {
