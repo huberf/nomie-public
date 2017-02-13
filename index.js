@@ -63,7 +63,7 @@ app.get('/users/:publicId', (req, res) => {
       <div id="main">
         ${user[0].name}<br />
         <div id="count">
-          Today's Count: ${user[0].todayCount}
+          Today's Count: ${user[0].todayCount}<br />
           Yesterday's Count: ${user[0].yesterdayCount}
         </div>
       </div>`
