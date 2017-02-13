@@ -124,7 +124,7 @@ app.post('/collect', (req, res) => {
           `<div class="">
             <div class="nui-list">
               <div class="text-center">
-                Your Public ID: <a href="https://nomiepublic.herokuapp.com/users/${publicId}">${publicId}</a>
+                Your Public ID: <a href="https://nomie.noahcodes.com/users/${publicId}">${publicId}</a>
               </div>
             </div>
           </div>`
@@ -144,7 +144,7 @@ app.post('/collect', (req, res) => {
           `<div class="">
             <div class="nui-list">
               <div class="text-center">
-                Your Public ID: <a href="https://nomiepublic.herokuapp.com/users/${publicId}">${publicId}</a>
+                Your Public ID: <a href="https://nomie.noahcodes.com/users/${publicId}">${publicId}</a>
               </div>
             </div>
           </div>`
