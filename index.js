@@ -1,4 +1,4 @@
-nd  //Getting all dependencies
+//Getting all dependencies
 var express = require('express');
 var tz = require('tz-lookup');
 var moment = require('moment-timezone');
