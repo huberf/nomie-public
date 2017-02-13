@@ -50,6 +50,7 @@ app.get('/', (req, res) => {
 app.get('/users/:publicId', (req, res) => {
   User.find({ publicId: req.params.publicId }, (err, user) => {
     if (user[0]) {
+      res.render('index', {title: user[0].name, yesterdayCount: user[0].yesterdayCount, todayCount: user[0].todayCount});
       var message = `<style>
         #main {
           color: grey;
@@ -67,7 +68,6 @@ app.get('/users/:publicId', (req, res) => {
           Yesterday's Count: ${user[0].yesterdayCount}
         </div>
       </div>`
-      res.send(message);
     } else {
       res.send('No user found');
     }
