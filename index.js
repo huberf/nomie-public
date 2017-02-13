@@ -90,6 +90,9 @@ var parseEvents = (data, timezone) => {
     var actualTime = moment(time, format).tz(timezone).format('MM DD');
     var currentDate = moment().format('MM DD');
     var yesterdayDate = moment().subtract(1, 'days').format('MM DD');
+    console.log('Check times');
+    console.log(currentDate);
+    console.log(yesterdayDate);
     if (actualTime == currentDate) {
       console.log('Found hit for today.');
       total += 1;
