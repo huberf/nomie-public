@@ -91,8 +91,6 @@ var parseEvents = (data, timezone) => {
     var currentDate = moment().format('MM DD');
     var yesterdayDate = moment().subtract(1, 'days').format('MM DD');
     console.log('Check times');
-    console.log(currentDate);
-    console.log(yesterdayDate);
     if (actualTime == currentDate) {
       console.log('Found hit for today.');
       total += 1;
@@ -117,7 +115,7 @@ app.post('/collect', (req, res) => {
   User.find({ userId }, (err, users) => {
     if (users[0] && users.length == 1) {
       users[0].todayCount = dayCount;
-      users[0].yesterdayCount = dayCount;
+      users[0].yesterdayCount = yesterdayCount;
       users[0].name = req.body.experiment.info.title.value;
       users[0].save();
       var publicId = users[0].publicId;
