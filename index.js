@@ -105,9 +105,7 @@ var parseEvents = (data, timezone) => {
 
 app.post('/collect', (req, res) => {
   // TODO: Make work
-  console.log(req.body);
-  console.log(req.body.experiment.slots.data);
-  console.log(req.body.experiment.info.title);
+  console.log(req.body.experiment.geo);
   var tzCalc = tz(req.body.experiment.geo[0], req.body.experiment.geo[1])
   var userId = req.body.anonid;
   var count = parseEvents(req.body.experiment.slots.data.data, tzCalc);
