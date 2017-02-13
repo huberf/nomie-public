@@ -1,4 +1,4 @@
-//Getting all dependencies
+nd  //Getting all dependencies
 var express = require('express');
 var tz = require('tz-lookup');
 var moment = require('moment-timezone');
@@ -99,6 +99,7 @@ var parseEvents = (data, timezone) => {
       yesterdayTotal += 1;
     }
   }
+  console.log('Returning expected totals');
   return {today: total, yesterday: yesterdayTotal};
 }
 
