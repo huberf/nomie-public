@@ -106,7 +106,7 @@ var parseEvents = (data, timezone) => {
 app.post('/collect', (req, res) => {
   // TODO: Make work
   console.log(req.body);
-  var tzCalc = tz(req.body.experiment.geo[0], req.body.experiment.geo[1])
+  var tzCalc = tz(req.body.experiment.location[0], req.body.experiment.location[1])
   var userId = req.body.anonid;
   var count = parseEvents(req.body.experiment.slots.data.data, tzCalc);
   var dayCount = count.today;
