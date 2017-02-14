@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
 app.get('/users/:publicId', (req, res) => {
   User.find({ publicId: req.params.publicId }, (err, user) => {
     if (user[0]) {
-      res.render('index', {title: user[0].name, yesterdayCount: user[0].yesterdayCount, todayCount: user[0].todayCount});
+      res.render('index', {title: user[0].name, yesterdayCount: user[0].yesterdayCount, todayCount: user[0].todayCount, color: '#479DCA'});
       var message = `<style>
         #main {
           color: grey;

@@ -1,15 +1,14 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<title>Nomie Count by Noah</title>
-	<link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700" rel="stylesheet">
-	<style>
+	<link href="https://fonts.googleapis.com/css?family=Nunito:300,400,600,700" rel="stylesheet" />
+	<style type="text/css">
 			body {
 				font-size:20px;
-				font-family:'Nunito'
+				font-family:'Nunito';
+        background-color:<%= color %>;
 			}
-
 			.counter-table {
 				width:100%;
 				height:100%;
@@ -20,31 +19,25 @@
 				bottom:0;
 				border:none;
 			}
-
 			.counter-table .header {
-				background-color:#479DCA;
 				color:#FFF;
 			}
-
 			.counter-table .today {
-				background-color:#1f7ba8;
+				background-color:rgba(0,0,0,0.2);
 				color:#FFF;
 			}
 			.counter-table .yesterday {
-				background-color:#19668b;
+				background-color:rgba(0,0,0,0.4);
 				color:#FFF;
 			}
-
 			.counter-table .header {
-				background-color:#479DCA;
 				color:#FFF;
 			}
 			.counter-table .footer {
-				background-color:#479DCA;
+				background-color:rgba(0,0,0,0.6);
 				color:#FFF;
 				text-align:center;
 			}
-
 			.counter-table .footer .noahlink {
 				font-size:2.2rem;
 				text-decoration: none;
@@ -52,7 +45,6 @@
 				display:block;
 				margin-bottom:5px;
 			}
-
 			.counter-table .header .content {
 				text-align:center;
 				font-size:3em;
@@ -69,33 +61,31 @@
 				text-align: center;
 				font-weight:bold;
 			}
-
 		</style>
 </head>
 <body>
-	<table cellSpacing=0 cellPadding=0 border=0 borderWidth=0 class="counter-table">
-		<tr class="header">>
+	<table cellspacing="0" cellPadding="0" class="counter-table">
+		<tr class="header">
 			<td colspan="2" class="content">
         <%= title %>
 			</td>
 		</tr>
-		<tr class="today">>
+		<tr class="today">
 			<td class="label">Today</td>
       <td class="value"><%= todayCount %></td>
 		</tr>
-		<tr class="yesterday">>
+		<tr class="yesterday">
 			<td class="label">Yesterday</td>
       <td class="value"><%= yesterdayCount %></td>
 		</tr>
 		<tr class="footer">
 			<td colspan=2 style="padding:1.5rem">
-				<a href="https://github.com/huberf/nomie-public" class="noahlink">Nomie Public. <span style="text-decoration:underline">Cloud App by Noah</span></a> <br />
+				<a href="https://github.com/huberf/nomie-public" class="noahlink">Share My Numbers. <span style="text-decoration:underline">Cloud App by Noah</span></a> <br />
 				<a href="https://nomie.io/?source=noahcount">
 					<img height="100" src="https://cdn.nomie.io/logos/track-with-nomie-button@2x.png" />
 				</a>
 			</td>
 		</tr>
 	</table>
-
 </body>
 </html>
