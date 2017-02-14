@@ -3,7 +3,7 @@
 	"name": "Share My Numbers",
 	"img": "https://nomiepublic.herokuapp.com/nomie-public.jpg",
 	"summary": "Anonymously share tracker data",
-	"uses": ["last-location", "api", "geo", "commands"],
+	"uses": ["last-location", "geo"],
 	"color": "#4A90E2",
 	"hostedBy": "Noah Huber-Feely",
 	"join": "https://nomiepublic.herokuapp.com/join",
@@ -31,16 +31,6 @@
 			"summary": null,
 			"tracker": null,
 			"required": true,
-			"recommended": {
-				"label": "Test",
-				"config": {
-					"type": "numeric",
-					"uom": "celsius",
-					"math": "mean"
-				},
-				"color": "#4A90E2",
-				"icon": "flaticon-thermometer21"
-			}
 		}
 	}
 }
