@@ -36,6 +36,7 @@ var userSchema = new mongoose.Schema({
 	userId: String,
   publicId: String,
   name: String,
+  color: String,
   todayCount: Number,
   yesterdayCount: Number,
 });
@@ -50,7 +51,7 @@ app.get('/', (req, res) => {
 app.get('/users/:publicId', (req, res) => {
   User.find({ publicId: req.params.publicId }, (err, user) => {
     if (user[0]) {
-      res.render('index', {title: user[0].name, yesterdayCount: user[0].yesterdayCount, todayCount: user[0].todayCount, color: '#479DCA'});
+      res.render('index', {title: user[0].name, yesterdayCount: user[0].yesterdayCount, todayCount: user[0].todayCount, color: user[0].color});
       var message = `<style>
         #main {
           color: grey;
@@ -117,6 +118,7 @@ app.post('/collect', (req, res) => {
       users[0].todayCount = dayCount;
       users[0].yesterdayCount = yesterdayCount;
       users[0].name = req.body.experiment.info.title.value;
+      users[0].color = req.body.experiment.color;
       users[0].save();
       var publicId = users[0].publicId;
       res.send(
@@ -135,6 +137,7 @@ app.post('/collect', (req, res) => {
         publicId,
         userId,
         name: req.body.experiment.info.title.value,
+        color: req.body.experiment.color,
         todayCount: dayCount,
         yesterdayCount: yesterdayCount,
       });
