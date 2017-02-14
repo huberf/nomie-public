@@ -30,7 +30,7 @@
 			"label": "Public",
 			"summary": null,
 			"tracker": null,
-			"required": true,
+			"required": true
 		}
 	}
 }
