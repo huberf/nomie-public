@@ -1,7 +1,6 @@
 //Getting all dependencies
 var express = require('express');
-import { getTimezoneNameByOffset } from 'tzname';
-var tz = require('tz-lookup');
+var tz = require('tzname');
 var moment = require('moment-timezone');
 var passGen = require('password-generator');
 var cookieParser = require('cookie-parser');
@@ -109,7 +108,7 @@ var parseEvents = (data, timezone) => {
 app.post('/collect', (req, res) => {
   // TODO: Make work
   console.log(req.body);
-  var tzCalc = getTimezoneNameByOffset(req.body.timezoneOffset);
+  var tzCalc = tz.getTimezoneNameByOffset(req.body.timezoneOffset);
   var userId = req.body.anonid;
   var count = parseEvents(req.body.experiment.slots.data.data, tzCalc);
   var dayCount = count.today;
