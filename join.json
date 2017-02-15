@@ -7,7 +7,7 @@
 	"color": "#4A90E2",
 	"hostedBy": "Noah Huber-Feely",
 	"join": "https://nomiepublic.herokuapp.com/join",
-	"more": "https://nomie.io",
+	"more": "https://github.com/huberf/nomie-public",
 	"collection": {
 		"method": "automatic",
 		"frequency": "30mm",
