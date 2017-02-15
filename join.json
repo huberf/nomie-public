@@ -3,7 +3,7 @@
 	"name": "Share My Numbers",
 	"img": "https://nomiepublic.herokuapp.com/ShareMyNumbers.png",
 	"summary": "Anonymously share tracker data",
-	"uses": ["last-location", "geo"],
+	"uses": [],
 	"color": "#4A90E2",
 	"hostedBy": "Noah Huber-Feely",
 	"join": "https://nomiepublic.herokuapp.com/join",
