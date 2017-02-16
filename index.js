@@ -1,5 +1,6 @@
 //Getting all dependencies
 var express = require('express');
+var ejs = require('ejs');
 var tz = require('tzname');
 var moment = require('moment-timezone');
 var passGen = require('password-generator');
@@ -121,8 +122,9 @@ app.post('/collect', (req, res) => {
       users[0].color = req.body.experiment.color;
       users[0].save();
       var publicId = users[0].publicId;
-      var html = new EJS({url: './views/results.ejs'}).render({ id: users[0].userId, todayCount, yesterdayCount, experiment: req.body.experiment })
-      res.send({ html });
+      ejs.renderFile('./views/results', { id: user[0].userId, todayCount, yesterdayCount, experiment: req.body.experiment }, {}, function(err, str){
+        res.send({ html: str });
+      });
     } else if (!users[0]) {
       var publicId = passGen(12, false);
       var newUser = User({
@@ -134,8 +136,9 @@ app.post('/collect', (req, res) => {
         yesterdayCount: yesterdayCount,
       });
       newUser.save();
-      var html = new EJS({url: './views/results.ejs'}).render({ id: publicId, todayCount, yesterdayCount, experiment: req.body.experiment })
-      res.send({ html });
+      ejs.renderFile('./views/results', { id: publicId, todayCount, yesterdayCount, experiment: req.body.experiment }, {}, function(err, str){
+        res.send({ html: str });
+      });
     }
   });
 });
