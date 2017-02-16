@@ -92,13 +92,10 @@ var parseEvents = (data, timezone) => {
     var actualTime = moment(time, format).tz(timezone).format('MM DD');
     var currentDate = moment().format('MM DD');
     var yesterdayDate = moment().subtract(1, 'days').format('MM DD');
-    console.log('Check times');
     if (actualTime == currentDate) {
-      console.log('Found hit for today.');
       total += 1;
     }
     if (actualTime == yesterdayDate) {
-      console.log('Found hit for yesterday.');
       yesterdayTotal += 1;
     }
   }
@@ -109,6 +106,7 @@ var parseEvents = (data, timezone) => {
 app.post('/collect', (req, res) => {
   // TODO: Make work
   console.log(req.body);
+  console.log(req.body.slots.data);
   var tzCalc = tz.getTimezoneNameByOffset(req.body.timezoneOffset);
   var userId = req.body.anonid;
   var count = parseEvents(req.body.experiment.slots.data.data, tzCalc);
