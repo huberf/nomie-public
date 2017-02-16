@@ -121,16 +121,8 @@ app.post('/collect', (req, res) => {
       users[0].color = req.body.experiment.color;
       users[0].save();
       var publicId = users[0].publicId;
-      res.send(
-          {html:
-          `<div class="">
-            <div class="nui-list">
-              <div class="text-center">
-                Your Public ID: <a href="https://nomie.noahcodes.com/users/${publicId}">${publicId}</a>
-              </div>
-            </div>
-          </div>`
-          });
+      var html = new EJS({url: './views/results.ejs'}).render({ id: users[0].userId, todayCount, yesterdayCount, experiment: req.body.experiment })
+      res.send({ html });
     } else if (!users[0]) {
       var publicId = passGen(12, false);
       var newUser = User({
@@ -142,16 +134,8 @@ app.post('/collect', (req, res) => {
         yesterdayCount: yesterdayCount,
       });
       newUser.save();
-      res.send(
-          {html:
-          `<div class="">
-            <div class="nui-list">
-              <div class="text-center">
-                Your Public ID: <a href="https://nomie.noahcodes.com/users/${publicId}">${publicId}</a>
-              </div>
-            </div>
-          </div>`
-          });
+      var html = new EJS({url: './views/results.ejs'}).render({ id: publicId, todayCount, yesterdayCount, experiment: req.body.experiment })
+      res.send({ html });
     }
   });
 });

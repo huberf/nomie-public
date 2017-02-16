@@ -1,0 +1,62 @@
+<!--
+  Nomie Experiment HTML Formating Notes
+
+  This HTML will be parsed by a markdown editor. Meaning you can use either HTML or Markdown which is Good.
+  It also means that any inline styles, calles to javascript or external CSS files will be promptly removed.
+
+  This means you're limited to the CSS classes that are available in Nomie.
+  While this document doesnt cover much, it will give you a starting point - until I have
+  better documentation setup for all the available class names.
+
+-->
+<div class="">
+  <div class="nui-list">
+    <div class="nui-item">
+      <div class="nui-item-addon nomie-button nomie-button-md">
+          <div class="icon-container">
+            <i class="<%=experiment.slots.data.data.icon %>"></i>
+          </div>
+      </div>
+      <div class="nui-item-content flex-grow">
+        <label for="" class="text-bold truncate"><%= experiment.slots.data.data.label %></label>
+        <p>Your Tracker</p>
+      </div>
+      <div class="nui-item-addon truncate ">
+        <span class="text-lg"><a href="https://nomie.noahcodes.com/users/<%= id %>"><%= i %></a></span>
+      </div>
+    </div>
+
+    <div class="nui-item-divider"></div>
+
+    <div class="nui-item nui-item-lg">
+      <div class="nui-item-content">
+        <label for="">Today</label>
+      </div>
+      <div class="nui-item-addon">
+          <span class="text-lg"> <%= todayCount %></span>
+      </div>
+    </div>
+
+    <div class="nui-item-divider"></div>
+
+    <div class="nui-item nui-item-lg">
+      <div class="nui-item-content">
+        <label for="">Yesterday</label>
+      </div>
+      <div class="nui-item-addon">
+          <span class="text-lg"> <%= yesterdayCount %></span>
+      </div>
+    </div>
+
+    <div class="nui-item-divider"></div>
+
+    <div class="nui-item">
+      <div class="nui-item-content">
+            <div class="text-solid text-sm text-center" >Experiencing trouble? Email nhuberfeely@gmail.com.</div>
+      </div>
+    </div>
+
+    <div class="nui-item-divider"></div>
+
+  </div>
+</div>
