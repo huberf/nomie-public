@@ -123,7 +123,9 @@ app.post('/collect', (req, res) => {
       users[0].save();
       var publicId = users[0].publicId;
       ejs.renderFile('./views/results', { id: users[0].userId, todayCount, yesterdayCount, experiment: req.body.experiment }, {}, function(err, str){
-        console.log(str);
+        if (err) {
+          console.log(err);
+        }
         res.send({ html: str });
       });
     } else if (!users[0]) {
@@ -138,6 +140,9 @@ app.post('/collect', (req, res) => {
       });
       newUser.save();
       ejs.renderFile('./views/results', { id: publicId, todayCount, yesterdayCount, experiment: req.body.experiment }, {}, function(err, str){
+        if (err) {
+          console.log(err);
+        }
         res.send({ html: str });
       });
     }
