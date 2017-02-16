@@ -106,7 +106,7 @@ var parseEvents = (data, timezone) => {
 app.post('/collect', (req, res) => {
   // TODO: Make work
   console.log(req.body);
-  console.log(req.body.slots.data);
+  console.log(req.body.experiment.slots.data);
   var tzCalc = tz.getTimezoneNameByOffset(req.body.timezoneOffset);
   var userId = req.body.anonid;
   var count = parseEvents(req.body.experiment.slots.data.data, tzCalc);
