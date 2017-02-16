@@ -112,11 +112,11 @@ app.post('/collect', (req, res) => {
   var tzCalc = tz.getTimezoneNameByOffset(req.body.timezoneOffset);
   var userId = req.body.anonid;
   var count = parseEvents(req.body.experiment.slots.data.data, tzCalc);
-  var dayCount = count.today;
+  var todayCount = count.today;
   var yesterdayCount = count.yesterday;
   User.find({ userId }, (err, users) => {
     if (users[0] && users.length == 1) {
-      users[0].todayCount = dayCount;
+      users[0].todayCount = todayCount;
       users[0].yesterdayCount = yesterdayCount;
       users[0].name = req.body.experiment.info.title.value;
       users[0].color = req.body.experiment.color;
@@ -132,7 +132,7 @@ app.post('/collect', (req, res) => {
         userId,
         name: req.body.experiment.info.title.value,
         color: req.body.experiment.color,
-        todayCount: dayCount,
+        todayCount: todayCount,
         yesterdayCount: yesterdayCount,
       });
       newUser.save();
