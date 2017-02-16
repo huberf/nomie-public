@@ -46,7 +46,7 @@ const db = mongoose.connect(process.env.MONGO_DB_URL);
 
 
 app.get('/', (req, res) => {
-  res.send('{"status": "online"}');
+  res.render('home');
 });
 
 app.get('/users/:publicId', (req, res) => {
