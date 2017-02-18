@@ -90,8 +90,8 @@ var parseEvents = (data, timezone) => {
     var time = rawTime.substring(0, 19) + "Z";
     var format = "YYYY-MM-DDThh:mm:ssz"
     var actualTime = moment(time, format).tz(timezone).format('MM DD');
-    var currentDate = moment().format('MM DD');
-    var yesterdayDate = moment().subtract(1, 'days').format('MM DD');
+    var currentDate = moment().tz(timezone).format('MM DD');
+    var yesterdayDate = moment().tz(timezone).subtract(1, 'days').format('MM DD');
     if (actualTime == currentDate) {
       total += 1;
     }
