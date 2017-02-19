@@ -40,6 +40,7 @@ var userSchema = new mongoose.Schema({
   color: String,
   todayCount: Number,
   yesterdayCount: Number,
+  monthCount: Number,
 });
 const User = mongoose.model('User', userSchema);
 const db = mongoose.connect(process.env.MONGO_DB_URL);
@@ -116,6 +117,7 @@ app.post('/collect', (req, res) => {
     if (users[0] && users.length == 1) {
       users[0].todayCount = todayCount;
       users[0].yesterdayCount = yesterdayCount;
+      users[0].monthCount = req.body.experiment.slots.data.data.length;
       users[0].name = req.body.experiment.info.title.value;
       users[0].color = req.body.experiment.color;
       users[0].save();
@@ -137,7 +139,13 @@ app.post('/collect', (req, res) => {
         yesterdayCount: yesterdayCount,
       });
       newUser.save();
-      ejs.renderFile('./views/results.ejs', { id: publicId, todayCount, yesterdayCount, experiment: req.body.experiment }, {}, function(err, str){
+      ejs.renderFile('./views/results.ejs', {
+        id: publicId,
+        todayCount,
+        yesterdayCount,
+        monthCount: req.body.experiment.slots.data.data.length,
+        experiment: req.body.experiment
+      }, {}, function(err, str){
         if (err) {
           console.log(err);
         }
