@@ -21,6 +21,17 @@ what you add as the tracker name.
 * `git push heroku master`
 * `heroku open`
 
+
+## How It Works
+* The Nomie app sounds the cloud service a month worth of tracking data (to the
+  `/collect` endpoint). The service then loads the current day and month in a
+  string of the fashion `DD MM`. It does the same for the previous day. It then
+  calculates this value for each data item and compares the strings. If it is
+  equal to the current day's string, it is added to the `todayCount` and the
+  same is used to calculate for the `yesterdayCount` variable. This data is then
+  stored in a MongoDB record. The in-app data screen is then sent using the
+  variables that stored this computed data as the source.
+
 If you want to have a fully private instance of this, please follow the above
 steps. Nomie is centered around privacy, so creating your own personal instance
 will give you the ability to easily selectively share your data without the
