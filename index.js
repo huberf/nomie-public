@@ -122,7 +122,13 @@ app.post('/collect', (req, res) => {
       users[0].color = req.body.experiment.color;
       users[0].save();
       var publicId = users[0].publicId;
-      ejs.renderFile('./views/results.ejs', { id: publicId, todayCount, yesterdayCount, experiment: req.body.experiment }, {}, function(err, str){
+      ejs.renderFile('./views/results.ejs', {
+        id: publicId,
+        todayCount,
+        yesterdayCount,
+        monthCount: req.body.experiment.slots.data.data.length,
+        experiment: req.body.experiment
+      }, {}, function(err, str){
         if (err) {
           console.log(err);
         }
@@ -137,6 +143,7 @@ app.post('/collect', (req, res) => {
         color: req.body.experiment.color,
         todayCount: todayCount,
         yesterdayCount: yesterdayCount,
+        monthCount: req.body.experiment.slots.data.data.length,
       });
       newUser.save();
       ejs.renderFile('./views/results.ejs', {
