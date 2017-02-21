@@ -82,6 +82,22 @@ app.get('/join', (req, res) => {
   res.send(config);
 });
 
+app.get('/api/:publicId', (req, res) => {
+  User.find({ publicId: req.params.publicId }, (err, user) => {
+    if (user[0]) {
+      res.send({
+        status: 'success',
+        title: user[0].name,
+        yesterdayCount: user[0].yesterdayCount,
+        todayCount: user[0].todayCount,
+        color: user[0].color,
+      });
+    } else {
+      res.send({status: 'wrong_id'});
+    }
+  });
+});
+
 // Determines count to display
 var parseEvents = (data, timezone) => {
   var total = 0;

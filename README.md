@@ -21,6 +21,15 @@ what you add as the tracker name.
 * `git push heroku master`
 * `heroku open`
 
+## Instruction Manual
+* Visit [nomie.noahcodes.com](https://nomie.noahcodes.com) in your phone's
+  webbrowser and press the add to Nomie button. Choose a tracker and title for
+  your page in the setup.
+* Run the app to see your ID and public URL. Click on the URL to view it in your
+  web browser and easily share it.
+* To use the JSON api, simply load `https://nomie.noahcodes.com/api/:userId`
+  replacing `:userID` with your personal ID.
+* Cheers!
 
 ## How It Works
 * The Nomie app sounds the cloud service a month worth of tracking data (to the
