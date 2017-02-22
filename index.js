@@ -90,6 +90,7 @@ app.get('/api/:publicId', (req, res) => {
         title: user[0].name,
         yesterdayCount: user[0].yesterdayCount,
         todayCount: user[0].todayCount,
+        monthCount: user[0].monthCount,
         color: user[0].color,
       });
     } else {
