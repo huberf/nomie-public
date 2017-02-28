@@ -1,6 +1,7 @@
 //Getting all dependencies
 var express = require('express');
 var ejs = require('ejs');
+var NomieUOM = require('./nomie-uom');
 var tz = require('tzname');
 var moment = require('moment-timezone');
 var passGen = require('password-generator');
@@ -100,7 +101,7 @@ app.get('/api/:publicId', (req, res) => {
 });
 
 // Determines count to display
-var parseEvents = (data, timezone) => {
+var parseEvents = (data, timezone, tracker) => {
   var total = 0;
   var yesterdayTotal = 0;
   for(var i = 0; i < data.length; i++) {
@@ -111,14 +112,19 @@ var parseEvents = (data, timezone) => {
     var currentDate = moment().tz(timezone).format('MM DD');
     var yesterdayDate = moment().tz(timezone).subtract(1, 'days').format('MM DD');
     if (actualTime == currentDate) {
-      total += 1;
+      total += data[i].value || 1;
     }
     if (actualTime == yesterdayDate) {
-      yesterdayTotal += 1;
+      yesterdayTotal += data[i].value || 1;
     }
+    monthTotal += data[i].value || 1;
   }
   console.log('Returning expected totals');
-  return {today: total, yesterday: yesterdayTotal};
+  return {
+    today: NomieUOM.displayValue(tracker.config.uom, total),
+    yesterday: NomieUOM.displayValue(tracker.config.uom, yesterdayTotal),
+    month: NomieUOM.displayValue(tracker.config.uom, monthTotal),
+  };
 }
 
 app.post('/collect', (req, res) => {
@@ -127,14 +133,15 @@ app.post('/collect', (req, res) => {
   console.log(req.body.experiment.slots.data);
   var tzCalc = tz.getTimezoneNameByOffset(req.body.timezoneOffset);
   var userId = req.body.anonid;
-  var count = parseEvents(req.body.experiment.slots.data.data, tzCalc);
+  var count = parseEvents(req.body.experiment.slots.data.data, tzCalc, req.body.experiment);
   var todayCount = count.today;
   var yesterdayCount = count.yesterday;
+  var monthCount = count.month;
   User.find({ userId }, (err, users) => {
     if (users[0] && users.length == 1) {
       users[0].todayCount = todayCount;
       users[0].yesterdayCount = yesterdayCount;
-      users[0].monthCount = req.body.experiment.slots.data.data.length;
+      users[0].monthCount = monthCount;
       users[0].name = req.body.experiment.info.title.value;
       users[0].color = req.body.experiment.color;
       users[0].save();
@@ -143,7 +150,7 @@ app.post('/collect', (req, res) => {
         id: publicId,
         todayCount,
         yesterdayCount,
-        monthCount: req.body.experiment.slots.data.data.length,
+        monthCount,
         experiment: req.body.experiment
       }, {}, function(err, str){
         if (err) {
@@ -160,14 +167,14 @@ app.post('/collect', (req, res) => {
         color: req.body.experiment.color,
         todayCount: todayCount,
         yesterdayCount: yesterdayCount,
-        monthCount: req.body.experiment.slots.data.data.length,
+        monthCount: monthCount,
       });
       newUser.save();
       ejs.renderFile('./views/results.ejs', {
         id: publicId,
         todayCount,
         yesterdayCount,
-        monthCount: req.body.experiment.slots.data.data.length,
+        monthCount,
         experiment: req.body.experiment
       }, {}, function(err, str){
         if (err) {
