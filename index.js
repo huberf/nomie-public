@@ -104,6 +104,7 @@ app.get('/api/:publicId', (req, res) => {
 var parseEvents = (data, timezone, tracker) => {
   var total = 0;
   var yesterdayTotal = 0;
+  var monthTotal = 0;
   for(var i = 0; i < data.length; i++) {
     var rawTime = data[i].time
     var time = rawTime.substring(0, 19) + "Z";
