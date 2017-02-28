@@ -134,7 +134,7 @@ app.post('/collect', (req, res) => {
   console.log(req.body.experiment.slots.data);
   var tzCalc = tz.getTimezoneNameByOffset(req.body.timezoneOffset);
   var userId = req.body.anonid;
-  var count = parseEvents(req.body.experiment.slots.data.data, tzCalc, req.body.experiment);
+  var count = parseEvents(req.body.experiment.slots.data.data, tzCalc, req.body.experiment.slots.data.tracker);
   var todayCount = count.today;
   var yesterdayCount = count.yesterday;
   var monthCount = count.month;
