@@ -42,6 +42,7 @@ var userSchema = new mongoose.Schema({
   todayCount: Number,
   yesterdayCount: Number,
   monthCount: Number,
+  lastSync: String,
 });
 const User = mongoose.model('User', userSchema);
 const db = mongoose.connect(process.env.MONGO_DB_URL);
@@ -145,6 +146,7 @@ app.post('/collect', (req, res) => {
       users[0].monthCount = monthCount;
       users[0].name = req.body.experiment.info.title.value;
       users[0].color = req.body.experiment.color;
+      users[0].lastSync = Date();
       users[0].save();
       var publicId = users[0].publicId;
       ejs.renderFile('./views/results.ejs', {
@@ -169,6 +171,7 @@ app.post('/collect', (req, res) => {
         todayCount: todayCount,
         yesterdayCount: yesterdayCount,
         monthCount: monthCount,
+        lastSync: Date(),
       });
       newUser.save();
       ejs.renderFile('./views/results.ejs', {
