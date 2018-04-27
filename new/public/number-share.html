@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Nomie 3 Days Since Stat Card</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.20.1/moment.min.js"></script>
+
+  <!-- This code uses Brandon Corbin's CSS toolkit for the UI, but any
+       library you like can be employed - bootstrap, material, whatever...
+       learn more about oh-flex at https://brandoncorbin.github.io/oh-flex/docs/
+  -->
+  <link rel="stylesheet" href="https://unpkg.com/oh-flex@2.2.0/lib/oh-flex.css">
+
+
+  <script type="text/javascript">
+  // This document is a single page by design
+// A way for not-so-technical folks to learn how this works
+// without a complicated build process.
+
+// The core function that Nomie3 will call,
+// with a payload (see sample-payload.json for example data)
+function onNomieData(jsonData) {
+  // Parse the data
+  let data = JSON.parse(jsonData);
+  // Set globally accessible variables
+  window.tracker = data.tracker;
+  window.nomie_events = data.events;
+  window.colors = data.colors;
+
+  var getTotalCount = function(events) {
+    var count = 0;
+    // 30 days past
+    var dateCutoff = Date.now() - (30*24*60*60*1000);
+    for (var i = 0; i < events.length; i++) {
+      let event = events[i];
+      if (event.end) {
+        if (event.end > dateCutoff) {
+          count = event.value;
+        }
+      }
+    }
+  }
+
+  //
+  // Generate a Vue App! Love me some Vue.
+  //
+  var app = new Vue({
+    el: "#app",
+    methods: {
+      toggleMode: function() {
+        if (this.mode == "value") {
+          this.mode = "count";
+        } else {
+          this.mode = "value";
+        }
+      }
+    },
+    computed: {
+      totalCount: function() {
+        return getTotalCount(window.nomie_events);
+      },
+      dataset: function() {
+        return this.totalCount;
+      }
+    },
+    data: {
+      tracker: window.tracker || testTracker,
+      nomie_events: window.nomie_events || testEvents,
+      colors: window.colors || {},
+      mode: "value" // or "count"
+    },
+    created: function() {
+      // Show the Body when its done loading
+      document.body.style.opacity = 1;
+    }
+  });
+}
+</script>
+
+<!--
+Some styles don't load immediately, so defaulting to black
+background is a good idea. Stats will always be viewed in a dark theme.
+-->
+<style>
+body {
+ height: 100%;
+ width: 100%;
+ margin: 0;
+ overflow: hidden;
+ background-color:#000;
+}
+.inactiveButton {
+  opacity: 0.3
+}
+[f-button]:focus:before, [f-button]:hover:before {
+  background-color:transparent !important
+}
+.circle {
+  margin:0 auto;
+  margin-top: 50px;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  font-size: 100px;
+  color: #fff;
+  line-height: 200px;
+  text-align: center;
+  background: rgb(54, 157, 211)
+}
+
+</style>
+</head>
+
+<body style="opacity:0" v-bind:style={backgroundColor:colors.primaryDark} f-bg-black>
+	<div f-layout id="app" f-app v-bind:style={backgroundColor:colors.primaryDark} style="width: 100%">
+		<div f-header f-bg-black v-bind:style={backgroundColor:colors.primaryDark}>
+			<div f-toolbar f-bg-black v-bind:style={backgroundColor:colors.primaryDark}>
+				<div f-title v-bind:style={color:tracker.color}>{{ tracker.emoji }} <span f-t-thin>days since</span></div>
+			</div>
+		</div>
+	  <div f-content style="width: 100%;">
+      <!-- Display days since in pleasant circle with distinctive Nomie blue -->
+      <div class="circle">{{dataset}}</div>
+		</div>
+	</div>
+
+  <!-- Uncomment the line below to test what sending data to nomie would be like. -->
+  <script src="../mock/on-nomie-data.js"></script>
+
+</body>
+
+</html>
