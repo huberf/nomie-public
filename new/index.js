@@ -6,6 +6,8 @@ var app = express();
 var nodemailer = require('nodemailer');
 var bodyParser = require('body-parser');
 var http = require('http').Server(app);
+var io = require('socket.io')(http);
+var passGen = require('password-generator');
 
 //Setting up the port to listen to
 app.set('port', (process.env.PORT || 5000));
@@ -25,6 +27,21 @@ app.use(session({secret: 'this_is_not_secret_actually_but_right_now_it_doesnt_ma
 // views is directory for all template files
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
+
+// Setup DB
+var mongoose = require('mongoose');
+var userSchema = new mongoose.Schema({
+	userId: String,
+  publicId: String,
+  name: String,
+  color: String,
+  todayCount: Number,
+  yesterdayCount: Number,
+  monthCount: Number,
+  lastSync: String,
+});
+const User = mongoose.model('User', userSchema);
+const db = mongoose.connect(process.env.MONGO_DB_URL);
 
 app.get('/', (req, res) => {
   res.render('index');
