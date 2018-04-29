@@ -51,7 +51,7 @@ app.get('/:userId', (req, res) => {
   var mockData = {
     id: req.params.userId,
     title: 'Mock Data',
-    backgroundColor: '
+    backgroundColor: 'black',
     todayCount: 10,
     yesterdayCount: 6,
     monthCount: 37,
@@ -63,6 +63,30 @@ app.get('/:userId', (req, res) => {
 app.post('/data/:userId', (req, res) => {
   // Add saving of data
   res.send({ status: 'success' });
+});
+
+io.on('connection', function(socket) {
+  socket.emit('online');
+  socket.on("senddata", function(userdata) {
+    User.find({ userId: userdata.id }, (err, user) => {
+      if (user.length > ) {
+        user[0].monthCount = userdata.monthCount;
+        user[0].save();
+      } else {
+        var newUser = new User({
+          userId: userdata.id,
+          publicId: "to_be_supported",
+          name: "to_be_supported",
+          color: "blue",
+          todayCount: 0,
+          yesterdayCount: 0,
+          monthCount: userdata.monthCount,
+          lastSync: Date.now()
+        });
+        newUser.save();
+      }
+    });
+  });
 });
 
 http.listen(app.get('port'), function() {

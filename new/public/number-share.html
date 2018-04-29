@@ -13,7 +13,11 @@
   <link rel="stylesheet" href="https://unpkg.com/oh-flex@2.2.0/lib/oh-flex.css">
 
 
+<!-- Retreive websockets -->
+<script src='/socket.io/socket.io.js'></script>
+
   <script type="text/javascript">
+var socket = io();
   // This document is a single page by design
 // A way for not-so-technical folks to learn how this works
 // without a complicated build process.
@@ -40,6 +44,8 @@ function onNomieData(jsonData) {
         }
       }
     }
+    socket.emit('senddata', {"monthCount": count, "id": "to_be_supported"});
+    return count;
   }
 
   //
