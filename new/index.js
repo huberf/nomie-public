@@ -34,6 +34,7 @@ var userSchema = new mongoose.Schema({
 	userId: String,
   publicId: String,
   name: String,
+  emoji: String,
   color: String,
   todayCount: Number,
   yesterdayCount: Number,
@@ -73,11 +74,13 @@ io.on('connection', function(socket) {
         user[0].monthCount = userdata.monthCount;
         user[0].save();
       } else {
+        var publicId = passGen(12, false);
         var newUser = new User({
           userId: userdata.id,
-          publicId: "to_be_supported",
+          publicId: publicId,
           name: "to_be_supported",
-          color: "blue",
+          emoji: userdata.emoji,
+          color: userdata.color,
           todayCount: 0,
           yesterdayCount: 0,
           monthCount: userdata.monthCount,
