@@ -70,7 +70,7 @@ io.on('connection', function(socket) {
   socket.emit('online');
   socket.on("senddata", function(userdata) {
     User.find({ userId: userdata.id }, (err, user) => {
-      if (user.length > ) {
+      if (user.length > 0) {
         user[0].monthCount = userdata.monthCount;
         user[0].save();
       } else {
@@ -78,7 +78,7 @@ io.on('connection', function(socket) {
         var newUser = new User({
           userId: userdata.id,
           publicId: publicId,
-          name: "to_be_supported",
+          name: userdata.name,
           emoji: userdata.emoji,
           color: userdata.color,
           todayCount: 0,

@@ -44,7 +44,13 @@ function onNomieData(jsonData) {
         }
       }
     }
-    socket.emit('senddata', {"monthCount": count, "id": "to_be_supported", "color": tracker.color, "emoji": tracker.emoji});
+    socket.emit('senddata', {
+      "monthCount": count,
+      "id": "to_be_supported",
+      "color": tracker.color,
+      "emoji": tracker.emoji,
+      "name": "to_be_supported"
+    });
     return count;
   }
 
